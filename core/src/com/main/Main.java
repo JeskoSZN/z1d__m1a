@@ -12,6 +12,7 @@ import java.util.Random;
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
 	Random r;
+	static String current_type = "";
 
 	static ArrayList<Zombies> zombies = new ArrayList<>();
 	ArrayList<Cannon> cannon = new ArrayList<>();
@@ -54,19 +55,43 @@ public class Main extends ApplicationAdapter {
 		for (Bullet b : bullets) b.update();
 
 		housekeeping();
-		System.out.println(cannon.size());
+
 
 	}
 
 	void tap() {
 		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight() - Gdx.input.getY();
-			if (buildable(x, y)) cannon.add(new Cannon("ccc", x, y));
+
+
+			for(Button b : button) if(b.hitbox().contains(x, y)){
+				if(b.locked) {
+					if (b.t != null && b.t.hidden) {hide_tt(); b.t.hidden = false;}
+					else {
+						b.locked = false;
+						if (b.t != null) b.t.hidden = true;
+					}
+				}
+				else{
+					deselect();
+					b.selected = true;
+					current_type = b.type;
+				}
+				return;
+			}
 
 
 			for(Cannon c : cannon) if(c.hitbox().contains(x, y)) return;
-			if (buildable(x, y)) cannon.add(new Cannon("super", x, y));
+			if (buildable(x, y)) cannon.add(new Cannon(current_type, x, y));
 		}
+	}
+
+	void deselect(){
+		for(Button b : button) b.selected = false;
+	}
+
+	void hide_tt(){
+		for(Button b : button) if(b.t != null) b.t.hidden = true;
 	}
 
 	boolean buildable(int x, int y) {
@@ -79,7 +104,12 @@ public class Main extends ApplicationAdapter {
 
 	void setup() {
 		Tables.init();
-		for (int i = 0; i < 5; i++) button.add(new Button("bbb",25 + i * 75, 525));
+		button.add(new Button("ccc",25 + button.size() * 75, 525));
+		button.add(new Button("fire",25 + button.size() * 75, 525));
+		button.add(new Button("super",25 + button.size() * 75, 525));
+		button.add(new Button("double",25 + button.size() * 75, 525));
+		button.add(new Button("laser",25 + button.size() * 75, 525));
+
 
 		}
 	void spawn_zombies() {

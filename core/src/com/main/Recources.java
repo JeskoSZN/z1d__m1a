@@ -3,7 +3,10 @@ package com.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.awt.Component;
+
 public class Recources {
+
     //UI Elements
     static Texture bg = new Texture(Gdx.files.internal( "bg_lab.png"));
     static Texture cannon_button = new Texture(Gdx.files.internal( "CannonIcon.png"));
@@ -14,6 +17,9 @@ public class Recources {
     static Texture cannon_mounted_button = new Texture(Gdx.files.internal( "mountedCannonIcon.png"));
     static Texture button_locked = new Texture(Gdx.files.internal( "locked.png"));
     static Texture button_selected = new Texture(Gdx.files.internal( "border.png"));
+    static Texture button_close = new Texture(Gdx.files.internal( "x.png"));
+    static Texture tooltip_bg = new Texture(Gdx.files.internal( "ttbg.png"));
+
 
     //Cannons
     static Texture cannon = new Texture(Gdx.files.internal( "Cannon.png"));
