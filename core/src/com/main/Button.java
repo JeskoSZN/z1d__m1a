@@ -1,8 +1,7 @@
 package com.main;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.awt.Rectangle;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Button {
     int x, y, w, h;

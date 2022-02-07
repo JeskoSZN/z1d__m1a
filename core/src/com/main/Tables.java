@@ -9,12 +9,18 @@ public class Tables {
     static HashMap<String, Texture> cannon_resources = new HashMap<String, Texture>();
     static HashMap<String, Texture> zombie_resources = new HashMap<String, Texture>();
     static HashMap<String, Texture> button_resources = new HashMap<String, Texture>();
+    static HashMap<String, Texture> resources = new HashMap<String, Texture>();
     static HashMap<String, String > tooltip_info = new HashMap<String, String>();
     static HashMap<String, Integer > values = new HashMap<String, Integer>();
 
 
 
     static void init(){
+        resources.put("effect_boom", Recources.boom);
+        resources.put("effect_muzzleflash", Recources.muzzleflash);
+        resources.put("effect_click", Recources.click);
+
+
         cannon_resources.put("fire", Recources.cannon_fire);
         cannon_resources.put("super", Recources.cannon_super);
         cannon_resources.put("double", Recources.cannon_double);
@@ -25,7 +31,13 @@ public class Tables {
         button_resources.put("fire", Recources.cannon_fire_button);
         button_resources.put("super", Recources.cannon_super_button);
         button_resources.put("double", Recources.cannon_double_button);
+        button_resources.put("laser", Recources.cannon_laser_button);
         button_resources.put("close", Recources.button_close);
+        button_resources.put("wall", Recources.button_wall);
+        button_resources.put("pause", Recources.button_pause);
+        button_resources.put("play", Recources.button_play);
+        button_resources.put("start", Recources.button_start);
+        button_resources.put("exit", Recources.button_exit);
 
 
         tooltip_info.put("fire", "Fires some bullets at some rate of fire");
@@ -65,6 +77,11 @@ public class Tables {
         values.put("health_speedy", 2);
         values.put("health_fast", 3);
         values.put("health_riot", 10);
+
+        //ANIMATION COLUMNS
+        values.put("columns_laser", 16);
+        values.put("columns_speedy", 6);
+        values.put("columns_boom", 5);
 
     }
 }

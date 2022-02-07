@@ -4,15 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
-import java.awt.Rectangle;
 
 public class Zombies {
     int x, y, w, h, hp;
     int speed;
+    int mhp;
     String type;
     boolean active = true;
-int rows = 1, cols = 4;
+int rows = 1, cols;
 Animation anim;
 TextureRegion[] frames;
 TextureRegion frame;
@@ -26,6 +27,8 @@ float frame_time = 0.2f; //1 second = 1.0f
         this.y = y;
         this.speed = Tables.values.get("speed_" + type) == null ? 1 : Tables.values.get("speed_" + type);
         hp = Tables.values.get("health_" + type) == null ? 3 : Tables.values.get("health_" + type);
+        mhp = hp;
+        cols = Tables.values.get("columns" + type) == null ? 4 : Tables.values.get("columns_" + type);
         w = (Tables.zombie_resources.get(type) == null ? Recources.zombie.getWidth() : Tables.zombie_resources.get(type).getWidth()) / cols;
         h = (Tables.zombie_resources.get(type) == null ? Recources.zombie.getHeight() : Tables.zombie_resources.get(type).getHeight()) / rows;
         init_animations();
@@ -36,11 +39,19 @@ float frame_time = 0.2f; //1 second = 1.0f
         frame_time += Gdx.graphics.getDeltaTime();
         frame = (TextureRegion) anim.getKeyFrame(frame_time, true);
         batch.draw(frame, x, y);
+        batch.draw(Recources.red_bar, x, y + h, mhp * (float)(w / mhp), 5);
+        batch.draw(Recources.green_bar, x, y + h, hp * (float)(w / mhp), 5);
+
     }
 
     void update(){
         x -= speed;
         active = x + w > 0 && hp > 0;
+        UI.life -= x + w > 0 ? 0 : 1;
+        UI.score += hp > 0 ? 0 : 1;
+        UI.money += hp > 0 ? 0 : 5;
+        hit_detect();
+
 
     }
     void init_animations(){
@@ -69,5 +80,12 @@ float frame_time = 0.2f; //1 second = 1.0f
 
     Rectangle hitbox(){ return new Rectangle(x, y, w, h);}
 
+    void hit_detect(){
+        if(ZTD.walls.isEmpty()) return;
+        for(Wall w : ZTD.walls) if(w.hitbox().contains(x, y)){
+            active = false;
+            w.hp--;
+        }
+    }
 
 }
